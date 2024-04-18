@@ -1,0 +1,143 @@
+#include <iostream>
+#include <iomanip>
+#include <cctype>
+using namespace std;
+
+//function declerations / prototypes
+void displayMenu();
+int getItem();
+double addToOrder(int combo, double totalBill);
+bool isFinished();
+void displayBill(double amount);
+void payBill(double bill);
+
+
+//Global constants - var's can be used by any function
+// in the program
+const double COMBO_1 = 5.45;
+const double COMBO_2 = 4.25;
+const double COMBO_3 = 3.50;
+
+
+int main() {
+    bool orderComplete = false;
+    int item;
+    double amountDue = 0;
+    
+
+    while (!orderComplete ) {
+        displayMenu();
+        item = getItem();
+        amountDue = addToOrder(item, amountDue);
+        displayBill(amountDue);
+        orderComplete = isFinished();
+    }
+
+    payBill(amountDue);
+  
+		return 0;
+				
+}
+
+// Function Name: display
+// Input(s): N/A
+// Return Value: N/A
+//Description: presents food menu to customer
+void displayMenu() {
+		cout << "*** CLUCK CAFE MENU ***" << endl <<  endl;
+		cout << fixed << setprecision(2);
+		cout << "Combo #1: Chicken Sandwich Combo - $" << COMBO_1 << endl;
+		cout << "Combo #2: Chicken Wrap Combo - $" << COMBO_2 << endl;
+		cout << "Combo #3: Chicken Salad Combo - $" << COMBO_3 << endl;
+}
+
+// Function Name: getItem
+// Input(s): N/A
+// Return Value: The choosen combo
+// Description: prompts the user for their combo selection
+int getItem() {
+		int comboVal;
+
+		do {
+				cout << "Enter the desired combo: ";
+				cin >> comboVal;
+
+		} while(comboVal < 1 || comboVal > 3);
+
+		return comboVal;
+				
+}
+
+// Function Name: addToOrder
+// Input(s): N/A
+// Return Value: updated bill
+// Description: adds the chosen combo to customer bill
+double addToOrder(int combo, double totalBill) {
+		// If combo = ..
+		switch (combo) {
+			case 1:
+					totalBill += COMBO_1;
+					cout << "Combo #1 added to cart!" << endl;
+          break;
+      case 2:
+          totalBill += COMBO_2;
+          cout << "Combo #2 added to cart!" << endl;
+          break;
+      default:
+          totalBill += COMBO_3;
+          cout << "Combo #3 added to cart!" << endl;
+    
+		}
+    return totalBill;
+}
+
+// Function Name: isFinished
+// Input(s): N/A
+// Return Value: Return true is the customer has completed 
+//  their order. Return false otherwise.
+// Description: ask customer if order is complete.
+bool isFinished() {
+    char answer;
+    do {
+        cout << "Does this complete your order ( Y / N)? ";
+        cin >> answer;
+        answer = tolower(answer);
+    }  while (answer != 'y'&& answer != 'n');
+
+    // option 1: if order complete return true.
+    if (answer == 'y')
+        return true;
+    else
+        return false;
+
+    // option 2:
+    //return (answer =='y');
+  
+}
+
+// Function Name: displayBill
+// Input(s): The customers' total amount due
+// Return Value: Display the current total bill.
+// Description: ask customer if order is complete.
+void displayBill(double amount) {
+    cout << fixed << setprecision(2);
+    cout << "Total Due: $" << amount << endl << endl;
+}
+
+// Function Name: payBill
+// Input(s): The customers' total amount due
+// Return Value: N/A
+// Description: collects payment from the customer and ends transaction
+void payBill(double bill) {
+    double payment;
+    displayBill(bill);
+
+    do {
+      cout << "Insert your payment: $";
+      cin >> payment;
+    } while (payment < bill);
+
+    cout << fixed << setprecision(2);
+    cout << "Change Due: $" << payment - bill << endl << endl;
+    cout << "Have a good day";
+}
