@@ -1,1 +1,1 @@
-I'm a begginner coding student with imposter syndrome. Would love to discuss different coding techniques. <3
+I'm a junior at UNA in Compooter Science. Trying my best to get better at it  <3
